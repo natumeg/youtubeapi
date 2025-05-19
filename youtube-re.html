@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>YouTubeアプリ</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <button id="toggleDark">
+    <h2>🌙 ダークモード</h2>
+  </button>
+  <img class="happa_top-left" src="./image/happa_top-left.png" alt="">
+  <img class="happa_top-right" src="./image/happa_top-right.png" alt="">
+  <img class="happa_bottom-left" src="./image/happa_bottom-left.png" alt="">
+  <img class="happa_bottom-right" src="./image/happa_bottom-right.png" alt="">
+
+
+  <main>
+    <h1>YouTube app</h1>
+    <section class="search-section">
+      <input type="text" id="searchInput" placeholder="動画を検索">
+      <button id="searchBtn">🔍 検索</button>
+    </section>
+
+    <section id="results" class="results"></section>
+
+    <section class="player-section">
+      <div class="player" id="player"></div>
+
+      <div class="controls">
+        <label>速度:
+          <select id="speedControl">
+            <option value="0.25">0.25x</option>
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+    </section>
+
+    <section class="favorites-history">
+      <div class="favorites">
+        <h2>お気に入り</h2>
+        <ul id="favoriteList"></ul>
+      </div>
+      <div class="history">
+        <h2>再生履歴</h2>
+        <ul id="historyList"></ul>
+      </div>
+    </section>
+    <section class="recommendations">
+      <h2>★ おすすめ動画</h2>
+      <div id="recommendationList" class="recommendation-list"></div>
+    </section>
+  </main>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player;
+    let youtubeId = 'Mj38FoEYVGA';
+
+    // YouTube APIの準備
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        videoId: youtubeId,
+        playerVars: { playsinline: 1 },
+      });
+    }
+
+    // 検索機能
+    document.getElementById('searchBtn').addEventListener('click', async () => {
+      const query = document.getElementById('searchInput').value.trim();
+      const API_KEY = 'AIzaSyDd4yZJzWqFVeAk594VFxV6psTR7varTVg';
+      const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${encodeURIComponent(query)}&key=${API_KEY}`);
+      const data = await res.json();
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+
+      data.items.forEach(video => {
+        const videoId = video.id.videoId;
+        const title = video.snippet.title;
+        const thumb = video.snippet.thumbnails.medium.url;
+
+        const div = document.createElement('div');
+        div.className = 'video-card';
+        div.innerHTML = `
+          <img src="${thumb}" alt="${title}">
+          <p>${title}</p>
+          <button class="playBtn">▶ 再生</button>
+          <button class="favBtn">★ お気に入り</button>
+        `;
+
+        div.querySelector('.playBtn').onclick = () => {
+          currentVideoId = videoId;
+          player.loadVideoById(videoId);
+          addToHistory({ videoId, title, thumb });
+        };
+
+        div.querySelector('.favBtn').onclick = () => {
+          addToFavorites({ videoId, title, thumb });
+        };
+
+        results.appendChild(div);
+      });
+    });
+
+    // 再生速度変更
+    document.getElementById('speedControl').addEventListener('change', (e) => {
+      player.setPlaybackRate(parseFloat(e.target.value));
+    });
+
+    // お気に入り機能
+    function addToFavorites(video) {
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      if (!favorites.find(f => f.videoId === video.videoId)) {
+        favorites.push(video);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        renderFavorites();
+      }
+    }
+
+    function renderFavorites() {
+      const list = document.getElementById('favoriteList');
+      list.innerHTML = '';
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      favorites.forEach(video => {
+        const li = document.createElement('li');
+        li.innerHTML = `<img src="${video.thumb}" width="60"><span>${video.title}</span>`;
+        li.onclick = () => player.loadVideoById(video.videoId);
+        list.appendChild(li);
+      });
+    }
+
+    // 再生履歴
+    function addToHistory(video) {
+      const history = JSON.parse(localStorage.getItem('history') || '[]');
+      history.unshift(video);
+      localStorage.setItem('history', JSON.stringify(history.slice(0, 20))); // 最新20件に制限
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const list = document.getElementById('historyList');
+      list.innerHTML = '';
+      const history = JSON.parse(localStorage.getItem('history') || '[]');
+      history.forEach(video => {
+        const li = document.createElement('li');
+        li.innerHTML = `<img src="${video.thumb}" width="60"><span>${video.title}</span>`;
+        li.onclick = () => player.loadVideoById(video.videoId);
+        list.appendChild(li);
+      });
+    }
+
+    // ダークモード切り替え
+    document.getElementById('toggleDark').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+
+    // 初回読み込み時にお気に入り・履歴表示
+    renderFavorites();
+    renderHistory();
+
+
+    const recommendations = [
+      {
+        videoId: "XVEkMhzHLTQ",
+        title: "フュージョン / DI: Verse",
+        thumb: "https://img.youtube.com/vi/XVEkMhzHLTQ/mqdefault.jpg"
+      },
+      {
+        videoId: "a_NB6QkfzAM",
+        title: "YOASOBI「Watch me!」",
+        thumb: "https://img.youtube.com/vi/a_NB6QkfzAM/mqdefault.jpg"
+      },
+      {
+        videoId: "hVuPwbnH1RQ",
+        title: "Sou「ただ、君のままで」",
+        thumb: "https://img.youtube.com/vi/hVuPwbnH1RQ/mqdefault.jpg"
+      },
+      {
+        videoId: "KpbHJBrHLzw",
+        title: "ジレンマ　メガテラ・ゼロ",
+        thumb: "https://img.youtube.com/vi/KpbHJBrHLzw/mqdefault.jpg"
+      }
+    ];
+
+    function renderRecommendations() {
+      const container = document.getElementById('recommendationList');
+      recommendations.slice(0, 5).forEach(video => {
+        const card = document.createElement('div');
+        card.className = 'recommendation-card';
+        card.innerHTML = `
+      <img src="${video.thumb}" alt="${video.title}">
+        <p>${video.title}</p>
+      `;
+        card.onclick = () => {
+          player.loadVideoById(video.videoId);
+          addToHistory(video);
+        };
+        container.appendChild(card);
+      });
+    }
+
+    renderRecommendations();
+  </script>
+</body>
+
+</html>

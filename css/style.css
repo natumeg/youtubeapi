@@ -1,0 +1,274 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: ADONIS;
+  src: url(../font/ADONIS-Regular.otf);
+}
+
+@font-face {
+  font-family: craft;
+  src: url(../font/craftmincho.otf);
+}
+
+@font-face {
+  font-family: Yamamot;
+  src: url(../font/FOT-YamamotoanClassicStdN-R.otf);
+}
+
+@font-face {
+  font-family: KTEGAKI;
+  src: url(../font/KTEGAKI.ttf);
+}
+
+body {
+  position: relative;
+  font-family: 'Arial', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  transition: background 0.3s, color 0.3s;
+  font-family: KTEGAKI;
+}
+
+#toggleDark {
+  position: fixed;
+  padding: 10px 50px 10px 30px;
+  border-radius: 50px 0 0 50px;
+  border: 1px solid #1e1e1e;
+  top: 30%;
+  right: 0;
+  z-index: 9999;
+}
+
+h1 {
+  margin-top: 4%;
+  font-family: craft;
+  font-size: 300%;
+  text-align: center;
+}
+
+.player {
+  width: 60%;
+  height: 65vh;
+}
+
+.happa_top-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.happa_top-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.happa_bottom-left {
+  position: fixed;
+  bottom: -30px;
+  left: -70px;
+  width: 50%;
+}
+
+.happa_bottom-right {
+  position: fixed;
+  bottom: -80px;
+  right: -50px;
+}
+
+header {
+  background: #d32f2f;
+  color: white;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-section {
+  text-align: center;
+  margin: 20px;
+}
+
+.search-section input {
+  padding: 10px;
+  width: 60%;
+  max-width: 400px;
+}
+
+.search-section button {
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.video-card {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  text-align: center;
+}
+
+.video-card img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.video-card button {
+  margin: 5px;
+  padding: 5px 10px;
+  border: none;
+  background: #d32f2f;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.player-section {
+  text-align: center;
+  margin: 20px;
+}
+
+.controls {
+  position: fixed;
+  top: 45%;
+  left: 5%;
+  margin-top: 10px;
+}
+
+#speedControl {
+  padding: 40px;
+  border-radius: 500px;
+
+}
+
+.favorites-history {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.favorites {
+  position: fixed;
+  padding: 10px 80px 10px 30px;
+  border-radius: 50px 0 0 50px;
+  border: 1px solid #1e1e1e;
+  top: 40%;
+  right: 0;
+}
+
+.history {
+  position: fixed;
+  padding: 10px 30px 10px 30px;
+  border-radius: 50px 0 0 50px;
+  border: 1px solid #1e1e1e;
+  top: 50%;
+  right: 0;
+  z-index: 9998;
+}
+
+.favorites ul,
+.history ul {
+  list-style: none;
+  padding: 0;
+}
+
+.favorites li,
+.history li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.favorites img,
+.history img {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+/* ダークモード */
+body.dark #toggleDark {
+  background: #565762;
+}
+
+body.dark {
+  background: #1e202c;
+  color: #d8d8d8;
+}
+
+body.dark #speedControl {
+  background: #565762;
+  color: #d8d8d8;
+}
+
+body.dark .video-card {
+  background: #1e1e1e;
+}
+
+body.dark header {
+  background: #000;
+}
+
+body.dark .video-card button {
+  background: #333;
+}
+
+body.dark .history {
+  border: 1px solid #d8d8d8;
+}
+
+.recommendations {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 12px;
+  margin-bottom: 10%;
+}
+
+body.dark .recommendations {
+  color: #d8d8d8;
+}
+
+.recommendation-list {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.recommendation-card {
+  flex: 0 0 23%;
+  background: #d8d8d8;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+body.dark .recommendation-card {
+  background: #2b2b2b;
+  color: #d8d8d8;
+}
+
+.recommendation-card img {
+  width: 100%;
+  display: block;
+}
+
+.recommendation-card p {
+  padding: 10px;
+  font-size: 14px;
+}

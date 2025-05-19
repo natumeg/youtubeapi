@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <form>
+        <input type="search" id="ytSearch" value="TRiDENT" />
+        <button id="searchBtn">検索</button>
+    </form>
+
+    <select class="searchlist"></select>
+
+    <div style="height: 100vh;"></div>
+    <script>
+        function ytSearch(val) {
+            const key = 'AIzaSyDd4yZJzWqFVeAk594VFxV6psTR7varTVg'; //自分のキーに書き換えます。
+            const num = 10;
+            const part = 'snippet';
+            const type = 'video';
+            const query = val;
+            const selectvideo = document.querySelector(".searchlist");
+            fetch(
+                `https://www.googleapis.com/youtube/v3/search?type=${type}&part=${part}&maxResults=${num}&key=${key}&q=${query}&playsinline=1`
+            )
+
+                .then((data) => data.json())
+                .then((obj) => {
+                    console.log(obj);
+                });
+        }
+
+        document.body.addEventListener("click", function () {
+            ytSearch("HIKAKIN");
+
+        })
+
+
+        const ytSearchBtn = document.querySelector('#searchBtn');
+        ytSearchBtn.addEventListener('click', function (e) {
+            const ytSearchVal = document.querySelector('#ytSearch').value;
+            console.log(ytSearchVal); //検索フォームの値を取得
+
+            e.preventDefault(); //検索ボタンの送信をストップしておく。
+        });
+    </script>
+</body>
+
+</html>
