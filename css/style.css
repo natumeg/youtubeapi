@@ -233,6 +233,10 @@ body.dark .history {
   border: 1px solid #d8d8d8;
 }
 
+body.dark .favorites {
+  border: 1px solid #d8d8d8;
+}
+
 .recommendations {
   width: 60%;
   margin-left: auto;
