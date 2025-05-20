@@ -144,7 +144,7 @@ header {
 .controls {
   z-index: 999;
   position: fixed;
-  top: 45%;
+  top: 37%;
   left: 5%;
   margin-top: 10px;
 }
@@ -163,12 +163,13 @@ header {
 }
 
 .favorites {
+  width: 200px;
   position: fixed;
   padding: 10px 80px 10px 30px;
-  border-radius: 50px 0 0 50px;
+  border-radius: 0 50px 50px 0;
   border: 1px solid #1e1e1e;
-  top: 40%;
-  right: 0;
+  top: 49%;
+  left: 0;
 }
 
 .history {
