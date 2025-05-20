@@ -79,7 +79,7 @@
     // 検索機能
     document.getElementById('searchBtn').addEventListener('click', async () => {
       const query = document.getElementById('searchInput').value.trim();
-      const API_KEY = 'AIzaSyDd4yZJzWqFVeAk594VFxV6psTR7varTVg';
+      const API_KEY = 'AIzaSyAc1D57-T6aMEGc_W8PFEOwminz8RGJzkg';
       const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${encodeURIComponent(query)}&key=${API_KEY}`);
       const data = await res.json();
       const results = document.getElementById('results');
