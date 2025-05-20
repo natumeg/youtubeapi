@@ -67,14 +67,14 @@ h1 {
 
 .happa_bottom-left {
   position: fixed;
-  bottom: -30px;
-  left: -70px;
+  bottom: -40px;
+  left: -120px;
   width: 50%;
 }
 
 .happa_bottom-right {
   position: fixed;
-  bottom: -80px;
+  bottom: -130px;
   right: -50px;
 }
 
@@ -140,6 +140,7 @@ header {
 }
 
 .controls {
+  z-index: 999;
   position: fixed;
   top: 45%;
   left: 5%;
@@ -234,7 +235,7 @@ body.dark .history {
   margin-left: auto;
   margin-right: auto;
   border-radius: 12px;
-  margin-bottom: 10%;
+  margin-bottom: 20%;
 }
 
 body.dark .recommendations {
@@ -242,6 +243,7 @@ body.dark .recommendations {
 }
 
 .recommendation-list {
+  flex-wrap: wrap;
   display: flex;
   flex-direction: row;
   gap: 16px;

@@ -7,14 +7,18 @@
   <link rel="stylesheet" href="./css/style.css">
 </head>
 
-<body>
+<body oncontextmenu="return false;">
   <button id="toggleDark">
     <h2>🌙 ダークモード</h2>
   </button>
-  <img class="happa_top-left" src="./image/happa_top-left.png" alt="">
-  <img class="happa_top-right" src="./image/happa_top-right.png" alt="">
-  <img class="happa_bottom-left" src="./image/happa_bottom-left.png" alt="">
-  <img class="happa_bottom-right" src="./image/happa_bottom-right.png" alt="">
+  <img class="happa_top-left" src="./image/happa_top-left.png" alt="" onselectstart="return false;"
+    onmousedown="return false;">
+  <img class="happa_top-right" src="./image/happa_top-right.png" alt="" onselectstart="return false;"
+    onmousedown="return false;">
+  <img class="happa_bottom-left" src="./image/happa_bottom-left.png" alt="" onselectstart="return false;"
+    onmousedown="return false;">
+  <img class="happa_bottom-right" src="./image/happa_bottom-right.png" alt="" onselectstart="return false;"
+    onmousedown="return false;">
 
 
   <main>
@@ -140,7 +144,7 @@
     function addToHistory(video) {
       const history = JSON.parse(localStorage.getItem('history') || '[]');
       history.unshift(video);
-      localStorage.setItem('history', JSON.stringify(history.slice(0, 20))); // 最新20件に制限
+      localStorage.setItem('history', JSON.stringify(history.slice(0, 8))); // 最新20件に制限
       renderHistory();
     }
 
@@ -186,12 +190,33 @@
         videoId: "KpbHJBrHLzw",
         title: "ジレンマ　メガテラ・ゼロ",
         thumb: "https://img.youtube.com/vi/KpbHJBrHLzw/mqdefault.jpg"
+      },
+      {
+        videoId: "xbVdMk8SEu8",
+        title: "「TO BE HERO X」ナイス編",
+        thumb: "https://img.youtube.com/vi/xbVdMk8SEu8/mqdefault.jpg"
+      },
+      {
+        videoId: "isu6OthQH2Y",
+        title: "【崩壊：スターレイル】<br>キャラクターPV",
+        thumb: "https://img.youtube.com/vi/isu6OthQH2Y/mqdefault.jpg"
+      },
+      {
+        videoId: "Ifebl6oGZV8",
+        title: "🦊 | Short Film",
+        thumb: "https://img.youtube.com/vi/Ifebl6oGZV8/mqdefault.jpg"
+      },
+      {
+        videoId: "vnucQMu0uqo",
+        title: "『魔入りました！入間くん<br>if Episode of 魔フィア』<br>1巻発売記念PV",
+        thumb: "https://img.youtube.com/vi/vnucQMu0uqo/mqdefault.jpg"
       }
+
     ];
 
     function renderRecommendations() {
       const container = document.getElementById('recommendationList');
-      recommendations.slice(0, 5).forEach(video => {
+      recommendations.slice(0, 10).forEach(video => {
         const card = document.createElement('div');
         card.className = 'recommendation-card';
         card.innerHTML = `
